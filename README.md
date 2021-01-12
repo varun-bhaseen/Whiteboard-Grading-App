@@ -1,3 +1,10 @@
+# Project Team Members:
+
+1. Wasae Qureshi
+2. Poornapragna Vadiraj
+3. Mirsaeid Abolghasemi
+4. Varun Bhaseen
+
 # EspApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.8.

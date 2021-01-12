@@ -1,0 +1,35 @@
+<div *ngIf="auth.isTeacher()">
+    <div *ngFor="let course of apis.getCurrentUserCourses()" >
+        <br/>
+        <div class="card center" style="width: 18rem;" (click) = "selectCourse(course.id)">
+            <div class="card-body">
+                <h5 class="card-title">{{course.class_name}}</h5>
+                <p class="card-text">{{course.description}}</p>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<div *ngIf="!auth.isTeacher()">
+    <div *ngFor="let course of apis.getCurrentUserCourses()" >
+        <br/>
+        <div class="card center" style="width: 18rem;" (click) = "selectCourse(course.id)">
+            <div class="card-body">
+                <h5 class="card-title">{{course.class_name}}</h5>
+                <p class="card-text">{{course.extras.teacher_email}}</p>
+                <p class="card-text">{{course.description}}</p>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<br/>
+
+<div class="center" *ngIf="apis.getCurrentUserCourses().length == 0 && auth.hasRole()">
+    <br/>
+    <div class="center" style="width: 25%;">
+            <div>
+                <p>You aren't enrolled in any classes :(</p>
+            </div>
+        </div>
+</div>

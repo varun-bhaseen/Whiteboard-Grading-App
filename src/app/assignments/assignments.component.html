@@ -1,0 +1,117 @@
+<div *ngIf="auth.isTeacher()">
+    <div class="special_side_padding" style="width: 25%;">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssignment" data-whatever="@mdo">Add Assignment</button>
+    </div>
+</div>
+<div *ngIf="auth.isTeacher() && apis.getCurrentUserAssignments().length != 0">
+    <div >
+        <br/>
+        <table class="table card center" style="width: 70%;">
+            <thead>
+                <tr>
+                <th scope="col" style="width: 13%;">Assignment Name</th>
+                <th scope="col" style="width: 13%;">Points</th>
+                <th scope="col" style="width: 13%;">Due Date</th>
+                <th scope="col" style="width: 13%;"></th>
+                <th scope="col" style="width: 13%;"></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let assignment of apis.getCurrentUserAssignments()">
+                <tr>
+                    <td><input #assignment_name [(ngModel)]="assignment.assignment_name" ></td>
+                    <td><input #points [(ngModel)]="assignment.points"></td>
+                    <td><input #due_date [(ngModel)]="assignment.due_date"></td>
+                    <td>
+                        <button type="button" class="btn btn-success" (click)="updateAssignment(assignment.id, assignment_name.value, points.value, due_date.value)">Update</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeAssignment" (click)="setAssignmentIdToRemove(assignment.id)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        
+        </table>
+    </div>    
+</div>
+<div *ngIf="!auth.isTeacher() && apis.getCurrentUserAssignments().length != 0">
+    <div>
+        <br/>
+        <table class="table card center" style="width: 70%;">
+            <thead>
+                <tr>
+                <th scope="col" style="width: 13%;">Assignment Name</th>
+                <th scope="col" style="width: 13%;">Points</th>
+                <th scope="col" style="width: 13%;">Due Date</th> 
+                </tr>
+            </thead>
+            <tbody *ngFor="let assignment of apis.getCurrentUserAssignments()">
+                <tr>
+                    <td>{{assignment.assignment_name}}</td>
+                    <td>{{assignment.points}}</td>
+                    <td>{{assignment.due_date}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+</div>
+<div class="center">
+    <br/>
+    <div *ngIf="apis.getCurrentUserAssignments().length == 0 && auth.hasRole()" class="center" style="width: 25%;">
+            <div>
+                <p>No Assignments for the class at the moment</p>
+            </div>
+        </div>
+</div>
+<div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="addAssignmentLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addAssignmentLabel">New Assignment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Assignment Name</label>
+                <input #assignment_name type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Points</label>
+                <input #points type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Due Date</label>
+                <input #due_date type="text" class="form-control" id="recipient-name">
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewAssignment(assignment_name.value, points.value, due_date.value)">Add</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="removeAssignment" tabindex="-1" role="dialog" aria-labelledby="removeAssignmentLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeAssignmentLabel">Are you sure?...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Once you remove, you can't undo!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="removeAssignment()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+    

@@ -1,0 +1,51 @@
+<app-side-menu></app-side-menu>
+<div *ngIf="auth.loggedIn && !auth.hasRole()" class="center" style="width: 25%;">
+    <p>You need a role! Please message your admin</p>
+</div>
+<div *ngIf="!auth.loggedIn" class="center" style="width: 50%;">
+    <br/>
+    <div class="center" *ngIf="!auth.loggedIn">
+            <p>
+                Welcome to WhiteBoard! This is attempt to mimic 
+                canvas. Here are some of the technologies we are using:
+            </p>
+            <ul>
+                <li>
+                    AngularJS
+                </li>
+                <li>
+                    AWS EC2 (Hosting)
+                </li>
+                <li>
+                    Jenkins (CI/CD)
+                </li>
+                <li>
+                    MySQL (DB)
+                </li>
+                <li>
+                    Auth0 (Authentication)
+                </li>
+                <li>
+                    Docker (Managing containers)
+                </li>
+                <li>
+                    Flask (Managing API's)
+                </li>
+                <li>
+                    Traefik
+                </li>
+                <li>
+                    Let's Encrypt
+                </li>
+            </ul>
+
+            <p>Enjoy!</p>
+
+            <p>
+                Sincerely,
+                <br/>
+                Team 5
+            </p>
+    </div>
+</div>
+

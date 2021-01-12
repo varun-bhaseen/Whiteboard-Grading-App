@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand">WhiteBoard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li *ngFor="let navItem of navItems" class="nav-item {{navItem.is_active}}" >
+          <a *ngIf="auth.loggedIn && auth.hasRole() && apis.hasSelectedCourse()" class="nav-link" href="/{{navItem.link}}" routerLink="/{{navItem.link}}" routerLinkActive="active" (click)="updateActive(navItem.nav_name)">{{navItem.nav_name}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</a>
+          <a class="nav-link" (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</a>
+        </li>
+       
+      </ul>
+    </div>
+</nav>
+<router-outlet></router-outlet>

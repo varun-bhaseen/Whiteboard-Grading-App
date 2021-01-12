@@ -1,0 +1,50 @@
+<div *ngIf="auth.isTeacher() && apis.getCurrentUserSyllabus().length != 0">
+    <div *ngFor="let syllabus of apis.getCurrentUserSyllabus()" >
+        <br/>
+        <form>
+            <div class="form-group center" style="width:75%">
+                <label for="exampleFormControlTextarea1">Syllabus</label>
+                <textarea #syllabus_text class="form-control" id="exampleFormControlTextarea1" rows="3">{{syllabus.text}}</textarea>
+                <br/>
+                <button type="button" class="btn btn-success" (click)="updateSyllabus(syllabus.id, syllabus.course_id, syllabus_text.value)">Update</button>
+            </div>
+        </form>
+    </div>    
+</div>
+
+<div *ngIf="auth.isTeacher() && apis.getCurrentUserSyllabus().length == 0" class="center">
+    <div class="center" style="width: 25%;">
+        <form>
+            <div class="form-group center" style="width:75%">
+                <label for="exampleFormControlTextarea1">Syllabus</label>
+                <textarea #syllabus_text class="form-control" id="exampleFormControlTextarea1" rows="3">Add Syllabus Text Here</textarea>
+                <br/>
+                <button type="button" class="btn btn-success" (click)="createSyllabus(syllabus_text.value)">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="!auth.isTeacher() && apis.getCurrentUserSyllabus().length != 0">
+    <div *ngFor="let syllabus of apis.getCurrentUserSyllabus()" >
+        <br/>
+        <div class="jumbotron center" style="width: 75%;">
+            <h1 class="display-4">Syllabus</h1>
+            <hr class="my-4">
+            <p>{{syllabus.text}}</p>
+        </div>
+    </div>    
+</div>
+
+<div *ngIf="!auth.isTeacher() && apis.getCurrentUserSyllabus().length == 0">
+        <br/>
+        <div class="jumbotron center" style="width: 75%;">
+            <h1 class="display-4">Syllabus</h1>
+            <hr class="my-4">
+            <p>No Syllabus set by the Teacher</p>
+        </div>
+</div>
+
+<br/>
+
+    

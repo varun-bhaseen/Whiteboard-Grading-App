@@ -1,0 +1,80 @@
+<div *ngIf="auth.isTeacher() && !curSelectedStudent">
+    
+    <div >
+        <br/>
+
+        <div class="list-group center" style="width: 70%;">
+            <a class="list-group-item list-group-item-action active">
+                Students
+            </a>
+            <div *ngFor="let student of apis.getAllStudentsForCourse()">
+                <a (click) = "navigateToStudentGradePage(student.student_id)" class="list-group-item list-group-item-action">{{student.student_id}}</a>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<div *ngIf="auth.isTeacher() && curSelectedStudent && apis.getCurrentUserAssignments().length != 0">
+    <div>
+        <br/>
+        <h3 class="center" style="width: 70%;">{{curSelectedStudent}}</h3>
+        <table class="table card center" style="width: 70%;">
+            <thead>
+                <tr>
+                <th scope="col" style="width: 13%;">Assignment Name</th>
+                <th scope="col" style="width: 13%;">Points</th>  
+                <th scope="col" style="width: 13%;"></th>                 
+                </tr>
+            </thead>
+            <tbody *ngFor="let assignment of apis.getCurrentUserAssignments()">
+                <tr>
+                    <td>{{assignment.assignment_name}}</td>
+                    <td> <input #points value={{apis.getGradeForCurUserAssignmentTeacherView(assignment.id,curSelectedStudent)}}> /{{assignment.points}}</td>
+                    <td>
+                        <button type="button" class="btn btn-success" (click)="updateAssignmentForStudent(curSelectedStudent, assignment.id, points.value)">Update</button>
+                    </td>
+                </tr>
+            </tbody>
+        
+        </table>
+    </div>   
+</div>
+
+<div *ngIf="auth.isTeacher() && curSelectedStudent && apis.getCurrentUserAssignments().length == 0">
+    <br/>
+    <div class="center" style="width: 25%;">
+        <div>
+            <p>You need to add assignments!</p>
+        </div>
+    </div> 
+</div>
+
+<div *ngIf="!auth.isTeacher() && apis.getCurrentUserAssignments().length != 0">
+    <div >
+        <br/>
+        <table class="table card center" style="width: 70%;">
+            <thead>
+                <tr>
+                <th scope="col" style="width: 13%;">Assignment Name</th>
+                <th scope="col" style="width: 13%;">Points</th>                
+                </tr>
+            </thead>
+            <tbody *ngFor="let assignment of apis.getCurrentUserAssignments()">
+                <tr>
+                    <td>{{assignment.assignment_name}}</td>
+                    <td>{{apis.getGradeForCurUserAssignment(assignment.id)}}/{{assignment.points}}</td>
+                </tr>
+            </tbody>
+        
+        </table>
+    </div>
+</div>
+
+<div *ngIf="!auth.isTeacher() && apis.getCurrentUserAssignments().length == 0">
+    <br/>
+    <div class="center" style="width: 25%;">
+        <div >
+            <p>The teacher has no assignments at the moment.</p>
+        </div>
+    </div>     
+</div>    
